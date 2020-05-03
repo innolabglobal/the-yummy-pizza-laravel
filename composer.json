@@ -16,6 +16,7 @@
         "infyomlabs/adminlte-templates": "7.0.x-dev",
         "infyomlabs/laravel-generator": "7.0.x-dev",
         "laravel/framework": "^7.0",
+        "laravel/sanctum": "^2.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "laravelcollective/html": "^6.1"
