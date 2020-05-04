@@ -14,6 +14,13 @@ abstract class BaseRepository
     protected $model;
 
     /**
+     * The relations to eager load.
+     *
+     * @var
+     */
+    protected $with = [];
+
+    /**
      * @var Application
      */
     protected $app;
@@ -85,7 +92,7 @@ abstract class BaseRepository
      */
     public function allQuery($search = [], $skip = null, $limit = null)
     {
-        $query = $this->model->newQuery();
+        $query = $this->model->newQuery()->with($this->with);
 
         if (count($search)) {
             foreach($search as $key => $value) {
@@ -149,7 +156,7 @@ abstract class BaseRepository
      */
     public function find($id, $columns = ['*'])
     {
-        $query = $this->model->newQuery();
+        $query = $this->model->newQuery()->with($this->with);
 
         return $query->find($id, $columns);
     }
@@ -189,5 +196,25 @@ abstract class BaseRepository
         $model = $query->findOrFail($id);
 
         return $model->delete();
+    }
+
+    /**
+     * Sets relations for eager loading.
+     *
+     * @param $relations
+     * @return $this
+     */
+    public function with ($relations)
+    {
+
+        if (is_string($relations)) {
+            $this->with = explode(',', $relations);
+
+            return $this;
+        }
+
+        $this->with = is_array($relations) ? $relations : [];
+
+        return $this;
     }
 }
