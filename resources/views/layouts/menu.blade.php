@@ -10,3 +10,7 @@
     <a href="{{ route('orders.index') }}"><i class="fa fa-edit"></i><span>Orders</span></a>
 </li>
 
+<li class="{{ Request::is('orderItems*') ? 'active' : '' }}">
+    <a href="{{ route('orderItems.index') }}"><i class="fa fa-edit"></i><span>Order Items</span></a>
+</li>
+
