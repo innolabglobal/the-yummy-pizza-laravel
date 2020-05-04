@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\menu;
+use App\Models\Menu;
 use App\Repositories\BaseRepository;
 
 /**
- * Class menuRepository
+ * Class MenuRepository
  * @package App\Repositories
  * @version May 3, 2020, 3:12 pm UTC
 */
 
-class menuRepository extends BaseRepository
+class MenuRepository extends BaseRepository
 {
     /**
      * @var array
@@ -37,6 +37,6 @@ class menuRepository extends BaseRepository
      **/
     public function model()
     {
-        return menu::class;
+        return Menu::class;
     }
 }

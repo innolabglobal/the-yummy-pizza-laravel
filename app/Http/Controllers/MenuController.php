@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreatemenuRequest;
-use App\Http\Requests\UpdatemenuRequest;
-use App\Repositories\menuRepository;
+use App\Http\Requests\CreateMenuRequest;
+use App\Http\Requests\UpdateMenuRequest;
+use App\Repositories\MenuRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
 
-class menuController extends AppBaseController
+class MenuController extends AppBaseController
 {
-    /** @var  menuRepository */
+    /** @var  MenuRepository */
     private $menuRepository;
 
-    public function __construct(menuRepository $menuRepo)
+    public function __construct(MenuRepository $menuRepo)
     {
         $this->menuRepository = $menuRepo;
     }
@@ -48,11 +48,11 @@ class menuController extends AppBaseController
     /**
      * Store a newly created menu in storage.
      *
-     * @param CreatemenuRequest $request
+     * @param CreateMenuRequest $request
      *
      * @return Response
      */
-    public function store(CreatemenuRequest $request)
+    public function store(CreateMenuRequest $request)
     {
         $input = $request->all();
 
@@ -107,11 +107,11 @@ class menuController extends AppBaseController
      * Update the specified menu in storage.
      *
      * @param int $id
-     * @param UpdatemenuRequest $request
+     * @param UpdateMenuRequest $request
      *
      * @return Response
      */
-    public function update($id, UpdatemenuRequest $request)
+    public function update($id, UpdateMenuRequest $request)
     {
         $menu = $this->menuRepository->find($id);
 

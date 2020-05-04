@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\menu;
+use App\Models\Menu;
 use Faker\Generator as Faker;
 
-$factory->define(menu::class, function (Faker $faker) {
+$factory->define(Menu::class, function (Faker $faker) {
 
     return [
         'created_at' => $faker->date('Y-m-d H:i:s'),

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\API;
+namespace App\Http\Requests;
 
-use App\Models\menu;
-use InfyOm\Generator\Request\APIRequest;
+use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Menu;
 
-class UpdatemenuAPIRequest extends APIRequest
+class CreateMenuRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,8 +25,6 @@ class UpdatemenuAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = menu::$rules;
-        
-        return $rules;
+        return Menu::$rules;
     }
 }

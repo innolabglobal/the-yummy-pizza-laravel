@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\menu;
+use App\Models\Menu;
 use Illuminate\Database\Seeder;
 
 const DUMMY_PIZZAS = [

@@ -4,9 +4,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
-use App\Models\menu;
+use App\Models\Menu;
 
-class menuApiTest extends TestCase
+class MenuApiTest extends TestCase
 {
     use ApiTestTrait, WithoutMiddleware, DatabaseTransactions;
 
@@ -15,7 +15,7 @@ class menuApiTest extends TestCase
      */
     public function test_create_menu()
     {
-        $menu = factory(menu::class)->make()->toArray();
+        $menu = factory(Menu::class)->make()->toArray();
 
         $this->response = $this->json(
             'POST',
@@ -30,7 +30,7 @@ class menuApiTest extends TestCase
      */
     public function test_read_menu()
     {
-        $menu = factory(menu::class)->create();
+        $menu = factory(Menu::class)->create();
 
         $this->response = $this->json(
             'GET',
@@ -45,8 +45,8 @@ class menuApiTest extends TestCase
      */
     public function test_update_menu()
     {
-        $menu = factory(menu::class)->create();
-        $editedmenu = factory(menu::class)->make()->toArray();
+        $menu = factory(Menu::class)->create();
+        $editedmenu = factory(Menu::class)->make()->toArray();
 
         $this->response = $this->json(
             'PUT',
@@ -62,7 +62,7 @@ class menuApiTest extends TestCase
      */
     public function test_delete_menu()
     {
-        $menu = factory(menu::class)->create();
+        $menu = factory(Menu::class)->create();
 
         $this->response = $this->json(
             'DELETE',

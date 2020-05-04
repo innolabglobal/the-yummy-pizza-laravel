@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\menu;
+use App\Models\Menu;
 use InfyOm\Generator\Request\APIRequest;
 
-class CreatemenuAPIRequest extends APIRequest
+class CreateMenuAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,6 @@ class CreatemenuAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return menu::$rules;
+        return Menu::$rules;
     }
 }

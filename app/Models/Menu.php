@@ -6,7 +6,7 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class menu
+ * Class Menu
  * @package App\Models
  * @version May 3, 2020, 3:12 pm UTC
  *
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $description
  * @property string $image
  */
-class menu extends Model
+class Menu extends Model
 {
     use SoftDeletes;
 

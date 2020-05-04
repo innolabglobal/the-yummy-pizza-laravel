@@ -1,24 +1,24 @@
 <?php namespace Tests\Repositories;
 
-use App\Models\menu;
-use App\Repositories\menuRepository;
+use App\Models\Menu;
+use App\Repositories\MenuRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 
-class menuRepositoryTest extends TestCase
+class MenuRepositoryTest extends TestCase
 {
     use ApiTestTrait, DatabaseTransactions;
 
     /**
-     * @var menuRepository
+     * @var MenuRepository
      */
     protected $menuRepo;
 
     public function setUp() : void
     {
         parent::setUp();
-        $this->menuRepo = \App::make(menuRepository::class);
+        $this->menuRepo = \App::make(MenuRepository::class);
     }
 
     /**
@@ -26,14 +26,14 @@ class menuRepositoryTest extends TestCase
      */
     public function test_create_menu()
     {
-        $menu = factory(menu::class)->make()->toArray();
+        $menu = factory(Menu::class)->make()->toArray();
 
         $createdmenu = $this->menuRepo->create($menu);
 
         $createdmenu = $createdmenu->toArray();
         $this->assertArrayHasKey('id', $createdmenu);
         $this->assertNotNull($createdmenu['id'], 'Created menu must have id specified');
-        $this->assertNotNull(menu::find($createdmenu['id']), 'menu with given id must be in DB');
+        $this->assertNotNull(Menu::find($createdmenu['id']), 'menu with given id must be in DB');
         $this->assertModelData($menu, $createdmenu);
     }
 
@@ -42,7 +42,7 @@ class menuRepositoryTest extends TestCase
      */
     public function test_read_menu()
     {
-        $menu = factory(menu::class)->create();
+        $menu = factory(Menu::class)->create();
 
         $dbmenu = $this->menuRepo->find($menu->id);
 
@@ -55,8 +55,8 @@ class menuRepositoryTest extends TestCase
      */
     public function test_update_menu()
     {
-        $menu = factory(menu::class)->create();
-        $fakemenu = factory(menu::class)->make()->toArray();
+        $menu = factory(Menu::class)->create();
+        $fakemenu = factory(Menu::class)->make()->toArray();
 
         $updatedmenu = $this->menuRepo->update($fakemenu, $menu->id);
 
@@ -70,11 +70,11 @@ class menuRepositoryTest extends TestCase
      */
     public function test_delete_menu()
     {
-        $menu = factory(menu::class)->create();
+        $menu = factory(Menu::class)->create();
 
         $resp = $this->menuRepo->delete($menu->id);
 
         $this->assertTrue($resp);
-        $this->assertNull(menu::find($menu->id), 'menu should not exist in DB');
+        $this->assertNull(Menu::find($menu->id), 'menu should not exist in DB');
     }
 }

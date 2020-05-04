@@ -42,6 +42,6 @@ Route::post('generator_builder/generate-from-file', '\InfyOm\GeneratorBuilder\Co
     ->name('io_generator_builder_generate_from_file');
 
 
-Route::resource('menus', 'menuController');
+Route::resource('menus', 'MenuController');
 
 Route::resource('priceOptions', 'PriceOptionController');

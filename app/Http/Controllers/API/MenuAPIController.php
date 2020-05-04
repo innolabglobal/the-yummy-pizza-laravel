@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\API\CreatemenuAPIRequest;
-use App\Http\Requests\API\UpdatemenuAPIRequest;
-use App\Models\menu;
-use App\Repositories\menuRepository;
+use App\Http\Requests\API\CreateMenuAPIRequest;
+use App\Http\Requests\API\UpdateMenuAPIRequest;
+use App\Models\Menu;
+use App\Repositories\MenuRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Response;
 
 /**
- * Class menuController
+ * Class MenuController
  * @package App\Http\Controllers\API
  */
 
-class menuAPIController extends AppBaseController
+class MenuAPIController extends AppBaseController
 {
-    /** @var  menuRepository */
+    /** @var  MenuRepository */
     private $menuRepository;
 
-    public function __construct(menuRepository $menuRepo)
+    public function __construct(MenuRepository $menuRepo)
     {
         $this->menuRepository = $menuRepo;
     }
@@ -47,11 +47,11 @@ class menuAPIController extends AppBaseController
      * Store a newly created menu in storage.
      * POST /menus
      *
-     * @param CreatemenuAPIRequest $request
+     * @param CreateMenuAPIRequest $request
      *
      * @return Response
      */
-    public function store(CreatemenuAPIRequest $request)
+    public function store(CreateMenuAPIRequest $request)
     {
         $input = $request->all();
 
@@ -70,7 +70,7 @@ class menuAPIController extends AppBaseController
      */
     public function show($id)
     {
-        /** @var menu $menu */
+        /** @var Menu $menu */
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
@@ -85,15 +85,15 @@ class menuAPIController extends AppBaseController
      * PUT/PATCH /menus/{id}
      *
      * @param int $id
-     * @param UpdatemenuAPIRequest $request
+     * @param UpdateMenuAPIRequest $request
      *
      * @return Response
      */
-    public function update($id, UpdatemenuAPIRequest $request)
+    public function update($id, UpdateMenuAPIRequest $request)
     {
         $input = $request->all();
 
-        /** @var menu $menu */
+        /** @var Menu $menu */
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
@@ -117,7 +117,7 @@ class menuAPIController extends AppBaseController
      */
     public function destroy($id)
     {
-        /** @var menu $menu */
+        /** @var Menu $menu */
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
