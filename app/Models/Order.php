@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\User;
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @version May 4, 2020, 9:44 am UTC
  *
- * @property \App\Models\User $user
+ * @property User $user
  * @property string $order_number
  * @property integer $user_id
  * @property string $status
@@ -32,7 +34,7 @@ class Order extends Model
     use SoftDeletes;
 
     public $table = 'orders';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -104,10 +106,15 @@ class Order extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      **/
     public function user()
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }
