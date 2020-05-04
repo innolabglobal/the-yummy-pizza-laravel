@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         \InfyOm\GeneratorBuilder\GeneratorBuilderServiceProvider::class,
+        Darryldecode\Cart\CartServiceProvider::class
     ],
 
     /*
@@ -230,7 +231,7 @@ return [
         'Form'         => Collective\Html\FormFacade::class,
         'Html'         => Collective\Html\HtmlFacade::class,
         'Flash'        => Laracasts\Flash\Flash::class,
-
+        'Cart'         => Darryldecode\Cart\Facades\CartFacade::class
     ],
 
 ];
