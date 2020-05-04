@@ -23,3 +23,6 @@ Route::post('register', 'AuthAPIController@register')->name('register');
 Route::resource('menus', 'MenuAPIController');
 
 Route::resource('price_options', 'PriceOptionAPIController');
+
+
+Route::resource('orders', 'OrderAPIController');
