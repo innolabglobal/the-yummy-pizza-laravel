@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Str;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -29,12 +31,13 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param \Throwable $exception
+     *
      * @return void
      *
      * @throws \Exception
      */
-    public function report(Throwable $exception)
+    public function report (Throwable $exception)
     {
         parent::report($exception);
     }
@@ -42,14 +45,22 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Throwable $exception
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable
      */
-    public function render($request, Throwable $exception)
+    public function render ($request, Throwable $exception)
     {
+        if ($exception instanceof ValidationException) {
+            if (Str::startsWith($request->getPathInfo(), '/api/')) {
+                return response()->json(['error' => $exception->errors()], 404);
+            }
+            return response()->view('errors.custom', [], 500);
+        }
+
         return parent::render($request, $exception);
     }
 }
