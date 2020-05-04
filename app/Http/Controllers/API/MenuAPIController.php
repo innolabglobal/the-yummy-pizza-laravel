@@ -34,7 +34,7 @@ class MenuAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $menus = $this->menuRepository->all(
+        $menus = $this->menuRepository->with('priceOption')->all(
             $request->except(['skip', 'limit']),
             $request->get('skip'),
             $request->get('limit')
@@ -71,7 +71,7 @@ class MenuAPIController extends AppBaseController
     public function show($id)
     {
         /** @var Menu $menu */
-        $menu = $this->menuRepository->find($id);
+        $menu = $this->menuRepository->with('priceOption')->find($id);
 
         if (empty($menu)) {
             return $this->sendError('Menu not found');
