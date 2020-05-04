@@ -2,15 +2,17 @@
 
 namespace App\Repositories;
 
+use App\Models\Menu;
 use App\Models\Order;
-use App\Repositories\BaseRepository;
+use App\Models\OrderItem;
+use Cart;
+use Darryldecode\Cart\Exceptions\UnknownModelException;
 
 /**
  * Class OrderRepository
  * @package App\Repositories
  * @version May 4, 2020, 9:44 am UTC
-*/
-
+ */
 class OrderRepository extends BaseRepository
 {
     /**
@@ -39,7 +41,7 @@ class OrderRepository extends BaseRepository
      *
      * @return array
      */
-    public function getFieldsSearchable()
+    public function getFieldsSearchable ()
     {
         return $this->fieldSearchable;
     }
@@ -47,8 +49,56 @@ class OrderRepository extends BaseRepository
     /**
      * Configure the Model
      **/
-    public function model()
+    public function model ()
     {
         return Order::class;
+    }
+
+    public function storeOrderDetails ($params)
+    {
+        foreach ($params['carts'] as $item) {
+            try {
+                Cart::add($item['id'], $item['title'], $item['price'], $item['quantity'], ["size" => $item['size']])
+                    ->associate(Menu::class);
+            } catch (UnknownModelException $e) {
+            }
+        }
+
+        $order = Order::create([
+            'order_number'   => 'TYP' . strtoupper(uniqid()),
+            'user_id'        => auth()->user() ? auth()->user()->id : null,
+            'status'         => 'pending',
+            'grand_total'    => Cart::getSubTotal(),
+            'item_count'     => Cart::getTotalQuantity(),
+            'payment_status' => 0,
+            'payment_method' => null,
+            'first_name'     => $params['first_name'],
+            'last_name'      => $params['last_name'],
+            'address'        => $params['address'],
+            'city'           => $params['city'],
+            'country'        => $params['country'],
+            'post_code'      => $params['post_code'],
+            'phone_number'   => $params['phone_number'],
+            'notes'          => $params['notes']
+        ]);
+
+        if ($order) {
+            $items = Cart::getContent();
+
+            foreach ($items as $item) {
+
+                $menu = Menu::find($item->id);
+
+                $orderItem = new OrderItem([
+                    'menu_id'  => $menu->id,
+                    'quantity' => $item->quantity,
+                    'price'    => $item->getPriceSum()
+                ]);
+
+                $order->items()->save($orderItem);
+            }
+        }
+
+        return $order;
     }
 }

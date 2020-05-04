@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateOrderAPIRequest;
 use App\Http\Requests\API\UpdateOrderAPIRequest;
 use App\Models\Order;
 use App\Repositories\OrderRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class OrderController
  * @package App\Http\Controllers\API
  */
-
 class OrderAPIController extends AppBaseController
 {
     /** @var  OrderRepository */
     private $orderRepository;
 
-    public function __construct(OrderRepository $orderRepo)
+    public function __construct (OrderRepository $orderRepo)
     {
         $this->orderRepository = $orderRepo;
     }
@@ -30,9 +30,10 @@ class OrderAPIController extends AppBaseController
      * GET|HEAD /orders
      *
      * @param Request $request
-     * @return Response
+     *
+     * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index (Request $request)
     {
         $orders = $this->orderRepository->all(
             $request->except(['skip', 'limit']),
@@ -49,9 +50,9 @@ class OrderAPIController extends AppBaseController
      *
      * @param CreateOrderAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function store(CreateOrderAPIRequest $request)
+    public function store (CreateOrderAPIRequest $request)
     {
         $input = $request->all();
 
@@ -66,9 +67,9 @@ class OrderAPIController extends AppBaseController
      *
      * @param int $id
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show ($id)
     {
         /** @var Order $order */
         $order = $this->orderRepository->find($id);
@@ -87,9 +88,9 @@ class OrderAPIController extends AppBaseController
      * @param int $id
      * @param UpdateOrderAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function update($id, UpdateOrderAPIRequest $request)
+    public function update ($id, UpdateOrderAPIRequest $request)
     {
         $input = $request->all();
 
@@ -111,11 +112,11 @@ class OrderAPIController extends AppBaseController
      *
      * @param int $id
      *
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      *
-     * @return Response
      */
-    public function destroy($id)
+    public function destroy ($id)
     {
         /** @var Order $order */
         $order = $this->orderRepository->find($id);
@@ -127,5 +128,20 @@ class OrderAPIController extends AppBaseController
         $order->delete();
 
         return $this->sendSuccess('Order deleted successfully');
+    }
+
+    /**
+     *  Place Order
+     *  POST /place-orders
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function placeOrder (Request $request)
+    {
+        $order = $this->orderRepository->storeOrderDetails($request->all());
+
+        return $this->sendResponse($order->toArray(), 'Order placed successfully');
     }
 }

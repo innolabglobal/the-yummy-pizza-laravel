@@ -26,5 +26,6 @@ Route::resource('price_options', 'PriceOptionAPIController');
 
 
 Route::resource('orders', 'OrderAPIController');
+Route::post('place-orders', 'OrderAPIController@placeOrder');
 
 Route::resource('order_items', 'OrderItemAPIController');
