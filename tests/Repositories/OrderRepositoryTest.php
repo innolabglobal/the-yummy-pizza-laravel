@@ -2,13 +2,13 @@
 
 use App\Models\Order;
 use App\Repositories\OrderRepository;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 
 class OrderRepositoryTest extends TestCase
 {
-    use ApiTestTrait, DatabaseTransactions;
+    use ApiTestTrait, RefreshDatabase;
 
     /**
      * @var OrderRepository

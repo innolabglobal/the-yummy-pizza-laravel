@@ -2,13 +2,13 @@
 
 use App\Models\PriceOption;
 use App\Repositories\PriceOptionRepository;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 
 class PriceOptionRepositoryTest extends TestCase
 {
-    use ApiTestTrait, DatabaseTransactions;
+    use ApiTestTrait, RefreshDatabase;
 
     /**
      * @var PriceOptionRepository

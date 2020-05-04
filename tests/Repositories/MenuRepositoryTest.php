@@ -2,13 +2,13 @@
 
 use App\Models\Menu;
 use App\Repositories\MenuRepository;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 
 class MenuRepositoryTest extends TestCase
 {
-    use ApiTestTrait, DatabaseTransactions;
+    use ApiTestTrait, RefreshDatabase;
 
     /**
      * @var MenuRepository
@@ -28,13 +28,13 @@ class MenuRepositoryTest extends TestCase
     {
         $menu = factory(Menu::class)->make()->toArray();
 
-        $createdmenu = $this->menuRepo->create($menu);
+        $createdMenu = $this->menuRepo->create($menu);
 
-        $createdmenu = $createdmenu->toArray();
-        $this->assertArrayHasKey('id', $createdmenu);
-        $this->assertNotNull($createdmenu['id'], 'Created menu must have id specified');
-        $this->assertNotNull(Menu::find($createdmenu['id']), 'menu with given id must be in DB');
-        $this->assertModelData($menu, $createdmenu);
+        $createdMenu = $createdMenu->toArray();
+        $this->assertArrayHasKey('id', $createdMenu);
+        $this->assertNotNull($createdMenu['id'], 'Created menu must have id specified');
+        $this->assertNotNull(Menu::find($createdMenu['id']), 'menu with given id must be in DB');
+        $this->assertModelData($menu, $createdMenu);
     }
 
     /**
@@ -44,10 +44,10 @@ class MenuRepositoryTest extends TestCase
     {
         $menu = factory(Menu::class)->create();
 
-        $dbmenu = $this->menuRepo->find($menu->id);
+        $dbMenu = $this->menuRepo->find($menu->id);
 
-        $dbmenu = $dbmenu->toArray();
-        $this->assertModelData($menu->toArray(), $dbmenu);
+        $dbMenu = $dbMenu->toArray();
+        $this->assertModelData($menu->toArray(), $dbMenu);
     }
 
     /**
@@ -56,13 +56,13 @@ class MenuRepositoryTest extends TestCase
     public function test_update_menu()
     {
         $menu = factory(Menu::class)->create();
-        $fakemenu = factory(Menu::class)->make()->toArray();
+        $fakeMenu = factory(Menu::class)->make()->toArray();
 
-        $updatedmenu = $this->menuRepo->update($fakemenu, $menu->id);
+        $updatedMenu = $this->menuRepo->update($fakeMenu, $menu->id);
 
-        $this->assertModelData($fakemenu, $updatedmenu->toArray());
-        $dbmenu = $this->menuRepo->find($menu->id);
-        $this->assertModelData($fakemenu, $dbmenu->toArray());
+        $this->assertModelData($fakeMenu, $updatedMenu->toArray());
+        $dbMenu = $this->menuRepo->find($menu->id);
+        $this->assertModelData($fakeMenu, $dbMenu->toArray());
     }
 
     /**
