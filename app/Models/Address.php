@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @version May 6, 2020, 7:08 am UTC
  *
- * @property \App\Models\User $user
+ * @property User $user
  * @property string $first_name
  * @property string $last_name
  * @property string $address
@@ -24,7 +25,7 @@ class Address extends Model
     use SoftDeletes;
 
     public $table = 'addresses';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -78,6 +79,6 @@ class Address extends Model
      **/
     public function user()
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
