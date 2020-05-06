@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\PriceOption;
 use Cart;
 use Darryldecode\Cart\Exceptions\UnknownModelException;
 
@@ -54,11 +55,11 @@ class OrderRepository extends BaseRepository
         return Order::class;
     }
 
-    public function storeOrderDetails ($params)
+    public function storeOrderDetails ($params, $userId = null)
     {
         foreach ($params['carts'] as $item) {
             try {
-                Cart::add($item['id'], $item['title'], $item['price'], $item['quantity'], ["size" => $item['size']])
+                Cart::add($item['id'], $item['title'], $item['price'], $item['quantity'], ["priceOptionId" => $item['price_option_id']])
                     ->associate(Menu::class);
             } catch (UnknownModelException $e) {
             }
@@ -66,7 +67,7 @@ class OrderRepository extends BaseRepository
 
         $order = Order::create([
             'order_number'   => 'TYP' . strtoupper(uniqid()),
-            'user_id'        => auth()->user() ? auth()->user()->id : null,
+            'user_id'        => $userId,
             'status'         => 'pending',
             'grand_total'    => Cart::getSubTotal(),
             'item_count'     => Cart::getTotalQuantity(),
@@ -85,14 +86,17 @@ class OrderRepository extends BaseRepository
         if ($order) {
             $items = Cart::getContent();
 
+
             foreach ($items as $item) {
 
                 $menu = Menu::find($item->id);
-
+                $priceOption = PriceOption::find($item->attributes->priceOptionId);
+                
                 $orderItem = new OrderItem([
-                    'menu_id'  => $menu->id,
-                    'quantity' => $item->quantity,
-                    'price'    => $item->getPriceSum()
+                    'menu_id'         => $menu->id,
+                    'quantity'        => $item->quantity,
+                    'price'           => $item->getPriceSum(),
+                    'price_option_id' => $priceOption->id
                 ]);
 
                 $order->items()->save($orderItem);

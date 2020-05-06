@@ -154,8 +154,7 @@ class OrderAPIController extends AppBaseController
 
     public function getOrderHistoryDetails ($id)
     {
-        /** @var Order $order */
-        $order = $this->orderRepository->with('items.menu')->find($id);
+        $order = $this->orderRepository->with(['items.priceOption', 'items.menu'])->find($id);
 
         if (empty($order)) {
             return $this->sendError('Order not found');
