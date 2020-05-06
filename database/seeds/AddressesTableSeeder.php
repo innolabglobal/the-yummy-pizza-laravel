@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Address;
+use App\User;
 use Illuminate\Database\Seeder;
 
 const DUMMY_ADDRESSES = [
@@ -10,7 +11,7 @@ const DUMMY_ADDRESSES = [
         'city'         => 'Witzhave',
         'phone_number' => '02532753469',
         'name'         => 'Parent Home',
-        'post_code'     => '48345',
+        'post_code'    => '48345',
         'first_name'   => 'Tony',
         'last_name'    => 'Stark'
     ],
@@ -20,7 +21,7 @@ const DUMMY_ADDRESSES = [
         'city'         => 'Münsterappel',
         'phone_number' => '02532753469',
         'name'         => 'Home',
-        'post_code'     => '48346',
+        'post_code'    => '48346',
         'first_name'   => 'Steve',
         'last_name'    => 'Roger'
     ],
@@ -30,7 +31,7 @@ const DUMMY_ADDRESSES = [
         'city'         => 'Ostbevern',
         'phone_number' => '02532753469',
         'name'         => 'Work',
-        'post_code'     => '48344',
+        'post_code'    => '48344',
         'first_name'   => 'Scott',
         'last_name'    => 'Lang'
     ],
@@ -45,8 +46,15 @@ class AddressesTableSeeder extends Seeder
      */
     public function run ()
     {
-        foreach (DUMMY_ADDRESSES as $address) {
-            Address::create($address);
+        $user = User::where('email', 'user001@gmail.com')->first();
+
+        if ($user) {
+            foreach (DUMMY_ADDRESSES as $address) {
+                $address = Address::create($address);
+                $address->user()->associate($user);
+                $address->save();
+            }
         }
+
     }
 }
