@@ -10,6 +10,7 @@ use App\Repositories\OrderRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\Sanctum;
 
 /**
  * Class OrderController
@@ -140,7 +141,17 @@ class OrderAPIController extends AppBaseController
      */
     public function placeOrder (Request $request)
     {
-        $order = $this->orderRepository->storeOrderDetails($request->all());
+        $userId = null;
+
+        // TODO: this could be implemented in better way after more study
+        if ($token = $request->bearerToken()) {
+            $model = Sanctum::$personalAccessTokenModel;
+
+            $accessToken = $model::findToken($token);
+            $userId = $accessToken->tokenable_id;
+        }
+        
+        $order = $this->orderRepository->storeOrderDetails($request->all(), $userId);
 
         return $this->sendResponse($order->toArray(), 'Order placed successfully');
     }
