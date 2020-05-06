@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,13 +15,19 @@ Route::post('login', 'AuthAPIController@login')->name('login');
 Route::post('register', 'AuthAPIController@register')->name('register');
 
 Route::resource('menus', 'MenuAPIController')->only(['index', 'show']);
-Route::resource('price_options', 'PriceOptionAPIController')->only(['index', 'show']);
-Route::resource('orders', 'OrderAPIController')->only(['index', 'show']);
-Route::resource('order_items', 'OrderItemAPIController')->only(['index', 'show']);
+//Route::resource('price_options', 'PriceOptionAPIController')->only(['index', 'show']);
+//Route::resource('orders', 'OrderAPIController')->only(['index', 'show']);
+//Route::resource('order_items', 'OrderItemAPIController')->only(['index', 'show']);
 
 Route::post('place-orders', 'OrderAPIController@placeOrder');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::group(['prefix' => 'own'], function () {
+        Route::get('addresses', 'AddressAPIController@indexOwn');
+        Route::get('orders', 'OrderAPIController@getOrderHistory');
+        Route::get('orders/{id}', 'OrderAPIController@getOrderHistoryDetails');
+    });
+
     Route::post('logout', 'AuthAPIController@logout')->name('logout');
-    Route::get('place-orders', 'OrderAPIController@getOrderHistory');
 });
+
