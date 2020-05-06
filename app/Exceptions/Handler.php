@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Str;
@@ -54,6 +55,12 @@ class Handler extends ExceptionHandler
      */
     public function render ($request, Throwable $exception)
     {
+        if ($exception instanceof AuthenticationException) {
+            if (Str::startsWith($request->getPathInfo(), '/api/')) {
+                return response()->json(['error' => $exception->getMessage()], 401);
+            }
+        }
+
         if ($exception instanceof ValidationException) {
             if (Str::startsWith($request->getPathInfo(), '/api/')) {
                 return response()->json(['error' => $exception->errors()], 404);
