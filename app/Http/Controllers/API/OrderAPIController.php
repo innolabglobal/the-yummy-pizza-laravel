@@ -151,4 +151,21 @@ class OrderAPIController extends AppBaseController
 
         return $this->sendResponse($orders->toArray(), 'Orders history retrieved successfully');
     }
+
+    public function getOrderHistoryDetails ($id)
+    {
+        /** @var Order $order */
+        $order = $this->orderRepository->with('items.menu')->find($id);
+
+        if (empty($order)) {
+            return $this->sendError('Order not found');
+        }
+
+
+        if ($order->user_id !== auth()->user()->id) {
+            return $this->sendError('Unauthenticated');
+        }
+
+        return $this->sendResponse($order->toArray(), 'Order retrieved successfully');
+    }
 }
