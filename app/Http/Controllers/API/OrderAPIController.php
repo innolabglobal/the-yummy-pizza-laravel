@@ -144,4 +144,11 @@ class OrderAPIController extends AppBaseController
 
         return $this->sendResponse($order->toArray(), 'Order placed successfully');
     }
+
+    public function getOrderHistory (Request $request)
+    {
+        $orders = $this->orderRepository->with('items.menu')->all(['user_id' => auth()->user()->id]);
+
+        return $this->sendResponse($orders->toArray(), 'Orders history retrieved successfully');
+    }
 }
