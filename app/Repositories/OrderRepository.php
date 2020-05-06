@@ -91,7 +91,7 @@ class OrderRepository extends BaseRepository
 
                 $menu = Menu::find($item->id);
                 $priceOption = PriceOption::find($item->attributes->priceOptionId);
-                
+
                 $orderItem = new OrderItem([
                     'menu_id'         => $menu->id,
                     'quantity'        => $item->quantity,
@@ -102,6 +102,8 @@ class OrderRepository extends BaseRepository
                 $order->items()->save($orderItem);
             }
         }
+
+        Cart::clear();
 
         return $order;
     }
