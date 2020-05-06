@@ -50,3 +50,5 @@ Route::resource('priceOptions', 'PriceOptionController');
 Route::resource('orders', 'OrderController');
 
 Route::resource('orderItems', 'OrderItemController');
+
+Route::resource('addresses', 'AddressController');
