@@ -16,13 +16,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $menu_id
  * @property integer $quantity
  * @property number $price
+ * @property integer $price_option_id
  */
 class OrderItem extends Model
 {
     use SoftDeletes;
 
     public $table = 'order_items';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -35,7 +36,8 @@ class OrderItem extends Model
         'order_id',
         'menu_id',
         'quantity',
-        'price'
+        'price',
+        'price_option_id'
     ];
 
     /**
@@ -48,7 +50,8 @@ class OrderItem extends Model
         'order_id' => 'integer',
         'menu_id' => 'integer',
         'quantity' => 'integer',
-        'price' => 'float'
+        'price' => 'float',
+        'price_option_id' => 'integer',
     ];
 
     /**
@@ -60,7 +63,8 @@ class OrderItem extends Model
         'order_id' => 'required',
         'menu_id' => 'required',
         'quantity' => 'required',
-        'price' => 'required'
+        'price' => 'required',
+        'price_option_id' => 'required'
     ];
 
     /**
@@ -77,5 +81,13 @@ class OrderItem extends Model
     public function order()
     {
         return $this->belongsTo(\App\Models\Order::class, 'order_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function priceOption()
+    {
+        return $this->belongsTo(\App\Models\PriceOption::class, 'price_option_id');
     }
 }
