@@ -35,11 +35,13 @@ class Address extends Model
 
 
     public $fillable = [
+        'name',
         'first_name',
         'last_name',
         'address',
         'city',
         'post_code',
+        'country',
         'phone_number',
         'user_id'
     ];
@@ -51,11 +53,13 @@ class Address extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'name' => 'string',
         'first_name' => 'string',
         'last_name' => 'string',
         'address' => 'string',
         'city' => 'string',
         'post_code' => 'string',
+        'country' => 'string',
         'phone_number' => 'string',
         'user_id' => 'integer'
     ];
@@ -66,11 +70,13 @@ class Address extends Model
      * @var array
      */
     public static $rules = [
+        'name' => 'required',
         'first_name' => 'required',
         'last_name' => 'required',
         'address' => 'required',
         'city' => 'required',
         'post_code' => 'required',
+        'country' => 'required',
         'phone_number' => 'required'
     ];
 

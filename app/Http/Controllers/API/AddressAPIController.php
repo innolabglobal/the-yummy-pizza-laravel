@@ -135,4 +135,15 @@ class AddressAPIController extends AppBaseController
 
         return $this->sendResponse($addresses->toArray(), 'Addresses retrieved successfully');
     }
+
+    public function storeOwn (CreateAddressAPIRequest $request)
+    {
+        $input = $request->all();
+
+        $input['user_id'] = auth()->user()->id;
+
+        $address = $this->addressRepository->create($input);
+
+        return $this->sendResponse($address->toArray(), 'Address saved successfully');
+    }
 }

@@ -24,6 +24,7 @@ Route::post('place-orders', 'OrderAPIController@placeOrder');
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'own'], function () {
         Route::get('addresses', 'AddressAPIController@indexOwn');
+        Route::post('addresses', 'AddressAPIController@storeOwn');
         Route::get('orders', 'OrderAPIController@getOrderHistory');
         Route::get('orders/{id}', 'OrderAPIController@getOrderHistoryDetails');
     });
