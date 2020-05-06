@@ -13,19 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('login', 'AuthAPIController@login')->name('login');
 Route::post('register', 'AuthAPIController@register')->name('register');
 
-Route::resource('menus', 'MenuAPIController');
+Route::resource('menus', 'MenuAPIController')->only(['index', 'show']);
+Route::resource('price_options', 'PriceOptionAPIController')->only(['index', 'show']);
+Route::resource('orders', 'OrderAPIController')->only(['index', 'show']);
+Route::resource('order_items', 'OrderItemAPIController')->only(['index', 'show']);
 
-Route::resource('price_options', 'PriceOptionAPIController');
-
-
-Route::resource('orders', 'OrderAPIController');
 Route::post('place-orders', 'OrderAPIController@placeOrder');
 
-Route::resource('order_items', 'OrderItemAPIController');
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('logout', 'AuthAPIController@logout')->name('logout');
+    Route::get('place-orders', 'OrderAPIController@getOrderHistory');
+});
