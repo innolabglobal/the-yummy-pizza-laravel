@@ -71,7 +71,7 @@ class AuthAPIController extends AppBaseController
 
     public function logout (Request $request)
     {
-        $user = User::findOrFail($request->id);
+        $user = User::findOrFail(auth()->user()->id);
         $user->tokens->each->delete();
         return $this->sendSuccess('Logged out successfully');
     }
