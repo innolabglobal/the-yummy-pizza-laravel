@@ -20,7 +20,6 @@ Route::resource('deliverable_post_codes', 'DeliverablePostCodeAPIController')->o
 //Route::resource('orders', 'OrderAPIController')->only(['index', 'show']);
 //Route::resource('order_items', 'OrderItemAPIController')->only(['index', 'show']);
 
-Route::post('place-orders', 'OrderAPIController@placeOrder');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'own'], function () {
@@ -28,8 +27,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('addresses', 'AddressAPIController@storeOwn');
         Route::get('orders', 'OrderAPIController@getOrderHistory');
         Route::get('orders/{id}', 'OrderAPIController@getOrderHistoryDetails');
+        Route::post('orders', 'OrderAPIController@placeOrder');
     });
 
     Route::post('logout', 'AuthAPIController@logout')->name('logout');
 });
+
+
 
