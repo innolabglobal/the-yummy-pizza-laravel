@@ -52,3 +52,5 @@ Route::resource('orders', 'OrderController');
 Route::resource('orderItems', 'OrderItemController');
 
 Route::resource('addresses', 'AddressController');
+
+Route::resource('deliverablePostCodes', 'DeliverablePostCodeController');

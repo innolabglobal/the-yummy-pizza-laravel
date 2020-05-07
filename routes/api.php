@@ -15,6 +15,7 @@ Route::post('login', 'AuthAPIController@login')->name('login');
 Route::post('register', 'AuthAPIController@register')->name('register');
 
 Route::resource('menus', 'MenuAPIController')->only(['index', 'show']);
+Route::resource('deliverable_post_codes', 'DeliverablePostCodeAPIController')->only(['index', 'show']);
 //Route::resource('price_options', 'PriceOptionAPIController')->only(['index', 'show']);
 //Route::resource('orders', 'OrderAPIController')->only(['index', 'show']);
 //Route::resource('order_items', 'OrderItemAPIController')->only(['index', 'show']);
