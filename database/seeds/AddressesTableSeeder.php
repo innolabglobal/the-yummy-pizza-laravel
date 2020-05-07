@@ -11,7 +11,7 @@ const DUMMY_ADDRESSES = [
         'city'         => 'Witzhave',
         'phone_number' => '02532753469',
         'name'         => 'Parent Home',
-        'post_code'    => '48345',
+        'post_code'    => '80331',
         'first_name'   => 'Tony',
         'last_name'    => 'Stark'
     ],
@@ -21,7 +21,7 @@ const DUMMY_ADDRESSES = [
         'city'         => 'Münsterappel',
         'phone_number' => '02532753469',
         'name'         => 'Home',
-        'post_code'    => '48346',
+        'post_code'    => '80333',
         'first_name'   => 'Steve',
         'last_name'    => 'Roger'
     ],
