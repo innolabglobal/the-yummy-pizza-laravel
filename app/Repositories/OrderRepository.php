@@ -2,11 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Models\DeliverablePostCode;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PriceOption;
 use Cart;
+use Darryldecode\Cart\CartCondition;
+use Darryldecode\Cart\Exceptions\InvalidConditionException;
 use Darryldecode\Cart\Exceptions\UnknownModelException;
 
 /**
@@ -65,6 +68,33 @@ class OrderRepository extends BaseRepository
             }
         }
 
+        try {
+            $vatCondition = new CartCondition([
+                'name'   => 'VAT 10%',
+                'type'   => 'tax',
+                'target' => 'subtotal',
+                'value'  => '10%',
+                'order'  => 1 // TODO: to be justified whether vat or delivery fees should be applied first
+            ]);
+        } catch (InvalidConditionException $e) {
+        }
+
+        $deliverablePostCode = DeliverablePostCode::where('post_code', $params['post_code'])->first();
+
+        try {
+            $deliveryFeesCondition = new CartCondition([
+                'name'   => 'Delivery Fees',
+                'type'   => 'shipping',
+                'target' => 'subtotal',
+                'value'  => '+' . $deliverablePostCode->delivery_fees,
+                'order'  => 2 // TODO: to be justified whether vat or delivery fees should be applied first
+            ]);
+        } catch (InvalidConditionException $e) {
+        }
+
+        Cart::condition($vatCondition);
+        Cart::condition($deliveryFeesCondition);
+
         $order = Order::create([
             'order_number'   => 'TYP' . strtoupper(uniqid()),
             'user_id'        => $userId,
@@ -85,7 +115,6 @@ class OrderRepository extends BaseRepository
 
         if ($order) {
             $items = Cart::getContent();
-
 
             foreach ($items as $item) {
 
