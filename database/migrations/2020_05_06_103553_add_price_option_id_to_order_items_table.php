@@ -14,7 +14,7 @@ class AddPriceOptionIdToOrderItemsTable extends Migration
     public function up ()
     {
         Schema::table('order_items', function (Blueprint $table) {
-            $table->integer('price_option_id')->index()->unsigned();
+            $table->integer('price_option_id')->index()->unsigned()->nullable();
             $table->foreign('price_option_id')->references('id')->on('price_options');
         });
     }
