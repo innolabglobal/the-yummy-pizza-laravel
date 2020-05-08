@@ -65,7 +65,6 @@ class Handler extends ExceptionHandler
             if (Str::startsWith($request->getPathInfo(), '/api/')) {
                 return response()->json(['error' => $exception->errors()], 404);
             }
-            return response()->view('errors.custom', [], 500);
         }
 
         return parent::render($request, $exception);
