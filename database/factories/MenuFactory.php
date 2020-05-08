@@ -12,6 +12,6 @@ $factory->define(Menu::class, function (Faker $faker) {
         'updated_at' => $faker->date('Y-m-d H:i:s'),
         'name' => $faker->word,
         'description' => $faker->text,
-        'image' => $faker->word
+        'image' => $faker->imageUrl()
     ];
 });

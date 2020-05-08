@@ -12,7 +12,7 @@ $factory->define(PriceOption::class, function (Faker $faker) {
         'created_at' => $faker->date('Y-m-d H:i:s'),
         'updated_at' => $faker->date('Y-m-d H:i:s'),
         'name' => $faker->word,
-        'value' => $faker->word,
+        'value' => $faker->randomDigitNotNull,
         'menu_id' => factory(Menu::class),
     ];
 });
