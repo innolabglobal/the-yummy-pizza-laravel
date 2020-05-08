@@ -2,13 +2,13 @@
 
 use App\Models\DeliverablePostCode;
 use App\Repositories\DeliverablePostCodeRepository;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 
 class DeliverablePostCodeRepositoryTest extends TestCase
 {
-    use ApiTestTrait, DatabaseTransactions;
+    use ApiTestTrait, RefreshDatabase;
 
     /**
      * @var DeliverablePostCodeRepository

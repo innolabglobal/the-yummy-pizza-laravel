@@ -2,13 +2,13 @@
 
 use App\Models\Address;
 use App\Repositories\AddressRepository;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 
 class AddressRepositoryTest extends TestCase
 {
-    use ApiTestTrait, DatabaseTransactions;
+    use ApiTestTrait, RefreshDatabase;
 
     /**
      * @var AddressRepository
