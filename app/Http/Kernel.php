@@ -25,6 +25,7 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use Spatie\Permission\Middlewares\RoleMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -82,6 +83,7 @@ class Kernel extends HttpKernel
         'can' => Authorize::class,
         'guest' => RedirectIfAuthenticated::class,
         'password.confirm' => RequirePassword::class,
+        'role' => RoleMiddleware::class,
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
