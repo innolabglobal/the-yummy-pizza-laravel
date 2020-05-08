@@ -10,6 +10,13 @@ class OrderItemApiTest extends TestCase
 {
     use ApiTestTrait, WithoutMiddleware, RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->markTestSkipped('Disabled API Routes.');
+    }
+
     /**
      * @test
      */

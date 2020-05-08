@@ -1,14 +1,21 @@
 <?php namespace Tests\APIs;
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 use App\Models\Address;
 
 class AddressApiTest extends TestCase
 {
-    use ApiTestTrait, WithoutMiddleware, DatabaseTransactions;
+    use ApiTestTrait, WithoutMiddleware, RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->markTestSkipped('Disabled API Routes.');
+    }
 
     /**
      * @test
@@ -21,6 +28,7 @@ class AddressApiTest extends TestCase
             'POST',
             '/api/addresses', $address
         );
+
 
         $this->assertApiResponse($address);
     }

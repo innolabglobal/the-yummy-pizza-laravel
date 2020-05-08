@@ -15,6 +15,8 @@ class MenuApiTest extends TestCase
      */
     public function test_create_menu()
     {
+        $this->markTestSkipped('Disabled API Routes.');
+
         $menu = factory(Menu::class)->make()->toArray();
 
         $this->response = $this->json(
@@ -45,6 +47,8 @@ class MenuApiTest extends TestCase
      */
     public function test_update_menu()
     {
+        $this->markTestSkipped('Disabled API Routes.');
+
         $menu = factory(Menu::class)->create();
         $editedmenu = factory(Menu::class)->make()->toArray();
 
@@ -62,6 +66,8 @@ class MenuApiTest extends TestCase
      */
     public function test_delete_menu()
     {
+        $this->markTestSkipped('Disabled API Routes.');
+
         $menu = factory(Menu::class)->create();
 
         $this->response = $this->json(

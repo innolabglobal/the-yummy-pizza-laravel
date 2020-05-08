@@ -1,20 +1,22 @@
 <?php namespace Tests\APIs;
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 use App\Models\DeliverablePostCode;
 
 class DeliverablePostCodeApiTest extends TestCase
 {
-    use ApiTestTrait, WithoutMiddleware, DatabaseTransactions;
+    use ApiTestTrait, WithoutMiddleware, RefreshDatabase;
 
     /**
      * @test
      */
     public function test_create_deliverable_post_code()
     {
+        $this->markTestSkipped('Disabled API Routes.');
+
         $deliverablePostCode = factory(DeliverablePostCode::class)->make()->toArray();
 
         $this->response = $this->json(
@@ -45,6 +47,8 @@ class DeliverablePostCodeApiTest extends TestCase
      */
     public function test_update_deliverable_post_code()
     {
+        $this->markTestSkipped('Disabled API Routes.');
+
         $deliverablePostCode = factory(DeliverablePostCode::class)->create();
         $editedDeliverablePostCode = factory(DeliverablePostCode::class)->make()->toArray();
 
@@ -62,6 +66,8 @@ class DeliverablePostCodeApiTest extends TestCase
      */
     public function test_delete_deliverable_post_code()
     {
+        $this->markTestSkipped('Disabled API Routes.');
+
         $deliverablePostCode = factory(DeliverablePostCode::class)->create();
 
         $this->response = $this->json(
