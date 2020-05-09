@@ -13,6 +13,9 @@ class SuperAdminUsersSeeder extends Seeder
      */
     public function run()
     {
+        Role::firstOrCreate(['name' => 'super-admin']);
+        Role::firstOrCreate(['name' => 'user']);
+
         $superAdmin = User::firstOrCreate(
             [
                 'email' => "superadmin@gmail.com",
@@ -23,9 +26,7 @@ class SuperAdminUsersSeeder extends Seeder
                 'password' => bcrypt('Test1234'),
             ]
         );
-
-        Role::firstOrCreate(['name' => 'super-admin']);
-        Role::firstOrCreate(['name' => 'user']);
+        
 
         User::all()->each(function (User $user) {
            $user->assignRole('user');
