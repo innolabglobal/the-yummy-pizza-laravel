@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -44,6 +45,8 @@ class User extends Authenticatable
         parent::boot();
 
         self::created(function (User $model) {
+            Role::firstOrCreate(['name' => 'user']);
+
             $model->assignRole('user');
         });
     }
