@@ -3,6 +3,9 @@
 
 A backend server for simple pizza delivery web application built with Laravel.
 
+### [Demo](https://the-yummy-pizza.web.app/)
+*** Important Notes: The demo only include Munich city in deliver coverage area.
+
 ## Features
   
   - Pizza ordering system.
